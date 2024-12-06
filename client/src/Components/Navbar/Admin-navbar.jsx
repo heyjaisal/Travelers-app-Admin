@@ -152,7 +152,7 @@ const AdminNavbar = () => {
               <h1 className="text-2xl font-bold">Admin Dashboard</h1>
             </div>
             <nav className="flex-1 p-4 space-y-4">
-              {/* Repeat similar to desktop links */}
+              
               <NavLink
                 to="/admin/home"
                 onClick={closeSidebar}
