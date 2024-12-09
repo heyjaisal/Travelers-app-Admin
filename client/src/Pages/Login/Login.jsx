@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Adminlogin } from "../../Components/Utils/Authservice"; 
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,19 +10,19 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); 
+    setError("");
 
     try {
-      const response = await Adminlogin({
+      const response = await axios.post("http://localhost:5000/api/login", {
         email,
         password,
-        role: "admin", 
+        role: "superadmin", // Ensures the role is sent if required
       });
 
       const { token } = response.data;
       if (token) {
         localStorage.setItem("token", token);
-        navigate("/admin/home");
+        navigate("/home");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
@@ -40,7 +40,7 @@ const Login = () => {
       </div>
       <div className="flex flex-col mt-9 justify-center items-center md:w-1/2 px-6 md:px-12">
         <h1 className="font-poppins text-2xl font-semibold mb-6 text-gray-700">
-          Admin Login
+          Super Admin Login
         </h1>
         <form onSubmit={handleLogin} className="w-[300px]">
           <div>

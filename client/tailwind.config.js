@@ -12,6 +12,7 @@ export default {
         hover:'#8A33FD',
         navtext:'#9197B3',
         lightBg: '#F4F7FE',
+        cards :'#252525',
         blue: {
           600: '#7B76F1',
           200:'#5954E4', // Replace the default blue-600 color

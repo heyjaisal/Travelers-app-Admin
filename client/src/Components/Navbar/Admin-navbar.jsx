@@ -23,13 +23,13 @@ const AdminNavbar = () => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="hidden md:flex flex-col w-64 bg-white text-slate-800 h-full">
+      <div className="hidden md:flex flex-col w-64 bg- text-slate-800 h-full">
         <div className="flex items-center justify-center h-20 border-b">
           <h1 className="text-2xl font-bold">Admin Dashboard</h1>
         </div>
         <nav className="flex-1 p-4 space-y-4">
           <NavLink
-            to="/admin/home"
+            to="/home"
             className={({ isActive }) =>
               `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
             }
@@ -38,7 +38,7 @@ const AdminNavbar = () => {
             Home
           </NavLink>
           <NavLink
-            to="/admin/all-users"
+            to="/all-users"
             className={({ isActive }) =>
               `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
             }
@@ -47,7 +47,7 @@ const AdminNavbar = () => {
             All Users
           </NavLink>
           <NavLink
-            to="/admin/payments"
+            to="/payments"
             className={({ isActive }) =>
               `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
             }
@@ -56,7 +56,7 @@ const AdminNavbar = () => {
             Payments
           </NavLink>
           <NavLink
-            to="/admin/requests"
+            to="/requests"
             className={({ isActive }) =>
               `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
             }
@@ -65,7 +65,7 @@ const AdminNavbar = () => {
             Requests
           </NavLink>
           <NavLink
-            to="/admin/notifications"
+            to="/notifications"
             className={({ isActive }) =>
               `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
             }
@@ -74,7 +74,7 @@ const AdminNavbar = () => {
             Notifications
           </NavLink>
           <NavLink
-            to="/admin/messages"
+            to="/messages"
             className={({ isActive }) =>
               `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
             }
@@ -83,7 +83,7 @@ const AdminNavbar = () => {
             Messages
           </NavLink>
           <NavLink
-            to="/admin/create"
+            to="/create"
             className={({ isActive }) =>
               `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
             }
@@ -92,7 +92,7 @@ const AdminNavbar = () => {
             Create
           </NavLink>
           <NavLink
-            to="/admin/approval"
+            to="/approval"
             className={({ isActive }) =>
               `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
             }
@@ -101,7 +101,7 @@ const AdminNavbar = () => {
             Approval
           </NavLink>
           <NavLink
-            to="/admin/profile-settings"
+            to="/profile-settings"
             className={({ isActive }) =>
               `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
             }
@@ -120,7 +120,7 @@ const AdminNavbar = () => {
             <span className="text-xs">Menu</span>
           </button>
           <NavLink
-            to="/admin/home"
+            to="/home"
             className={({ isActive }) =>
               `flex flex-col items-center gap-1 ${isActive ? "text-blue-500" : ""}`
             }
@@ -129,7 +129,7 @@ const AdminNavbar = () => {
             <span className="text-xs">Home</span>
           </NavLink>
           <NavLink
-            to="/admin/payments"
+            to="/payments"
             className={({ isActive }) =>
               `flex flex-col items-center gap-1 ${isActive ? "text-blue-500" : ""}`
             }
@@ -154,7 +154,7 @@ const AdminNavbar = () => {
             <nav className="flex-1 p-4 space-y-4">
               
               <NavLink
-                to="/admin/home"
+                to="/home"
                 onClick={closeSidebar}
                 className={({ isActive }) =>
                   `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
@@ -174,7 +174,7 @@ const AdminNavbar = () => {
                 All Users
               </NavLink>
               <NavLink
-                to="/admin/payments"
+                to="/payments"
                 onClick={closeSidebar}
                 className={({ isActive }) =>
                   `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
@@ -184,7 +184,7 @@ const AdminNavbar = () => {
                 Payments
               </NavLink>
               <NavLink
-                to="/admin/requests"
+                to="/requests"
                 onClick={closeSidebar}
                 className={({ isActive }) =>
                   `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
@@ -194,7 +194,7 @@ const AdminNavbar = () => {
                 Requests
               </NavLink>
               <NavLink
-                to="/admin/notifications"
+                to="/notifications"
                 onClick={closeSidebar}
                 className={({ isActive }) =>
                   `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
@@ -204,7 +204,7 @@ const AdminNavbar = () => {
                 Notifications
               </NavLink>
               <NavLink
-                to="/admin/messages"
+                to="/messages"
                 onClick={closeSidebar}
                 className={({ isActive }) =>
                   `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
@@ -214,7 +214,7 @@ const AdminNavbar = () => {
                 Messages
               </NavLink>
               <NavLink
-                to="/admin/create"
+                to="/create"
                 onClick={closeSidebar}
                 className={({ isActive }) =>
                   `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
@@ -224,7 +224,7 @@ const AdminNavbar = () => {
                 Create
               </NavLink>
               <NavLink
-                to="/admin/approval"
+                to="/approval"
                 onClick={closeSidebar}
                 className={({ isActive }) =>
                   `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`
@@ -234,7 +234,7 @@ const AdminNavbar = () => {
                 Approval
               </NavLink>
               <NavLink
-                to="/admin/profile-settings"
+                to="/profile-settings"
                 onClick={closeSidebar}
                 className={({ isActive }) =>
                   `flex items-center gap-4 p-3 rounded-xl ${isActive ? "bg-blue-600 text-white" : ""}`

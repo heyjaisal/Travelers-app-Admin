@@ -18,17 +18,17 @@ const App = () => {
     <div>
       <Router>
         <Routes>
-          <Route path='/admin' element={<Login/>}/>
+          <Route path='/' element={<Login/>}/>
           <Route element={<AdminDashboardLayout />}>
-          <Route path="/admin/home" element={<AdminHome />} />
-          <Route path="/admin/all-users" element={<AllUsers />} />
-          <Route path="/admin/payments" element={<AdminPayments />} />
-          <Route path="/admin/requests" element={<AdminRequests />} />
-          <Route path="/admin/notifications" element={<AdminNotifications />} />
-          <Route path="/admin/messages" element={<AdminMessages />} />
-          <Route path="/admin/create" element={<AdminCreate />} />
-          <Route path="/admin/approval" element={<AdminApproval />} />
-          <Route path="/admin/profile-settings" element={<AdminProfileSettings />}
+          <Route path="/home" element={<AdminHome />} />
+          <Route path="/all-users" element={<AllUsers />} />
+          <Route path="/payments" element={<AdminPayments />} />
+          <Route path="/requests" element={<AdminRequests />} />
+          <Route path="/notifications" element={<AdminNotifications />} />
+          <Route path="/messages" element={<AdminMessages />} />
+          <Route path="/create" element={<AdminCreate />} />
+          <Route path="/approval" element={<AdminApproval />} />
+          <Route path="/profile-settings" element={<AdminProfileSettings />}
           />
         </Route>
         <Route path="*" element={<Login />} />
