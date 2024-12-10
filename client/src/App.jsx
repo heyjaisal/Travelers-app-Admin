@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './Pages/Login/Login';
 import AdminDashboardLayout from './Components/Navbar/Admin-layout';
 import AdminHome from './Pages/Admin/Home';
@@ -11,34 +11,30 @@ import AdminMessages from './Pages/Admin/Messages';
 import AdminCreate from './Pages/Admin/Create';
 import AdminApproval from './Pages/Admin/Approval';
 import AdminProfileSettings from './Pages/Admin/ProfileSettings';
-
+import PrivateRoute from './Components/Utils/PrivateRoute';  // Import the PrivateRoute component
 
 const App = () => {
   return (
     <div>
       <Router>
         <Routes>
-          <Route path='/' element={<Login/>}/>
-          <Route element={<AdminDashboardLayout />}>
-          <Route path="/home" element={<AdminHome />} />
-          <Route path="/all-users" element={<AllUsers />} />
-          <Route path="/payments" element={<AdminPayments />} />
-          <Route path="/requests" element={<AdminRequests />} />
-          <Route path="/notifications" element={<AdminNotifications />} />
-          <Route path="/messages" element={<AdminMessages />} />
-          <Route path="/create" element={<AdminCreate />} />
-          <Route path="/approval" element={<AdminApproval />} />
-          <Route path="/profile-settings" element={<AdminProfileSettings />}
-          />
-        </Route>
-        <Route path="*" element={<Login />} />
+          <Route path="/" element={<Login />} />
+          <Route element={<PrivateRoute> {/* Wrap the routes you want to protect */} <AdminDashboardLayout /> </PrivateRoute>}>
+            <Route path="/home" element={<AdminHome />} />
+            <Route path="/all-users" element={<AllUsers />} />
+            <Route path="/payments" element={<AdminPayments />} />
+            <Route path="/requests" element={<AdminRequests />} />
+            <Route path="/notifications" element={<AdminNotifications />} />
+            <Route path="/messages" element={<AdminMessages />} />
+            <Route path="/create" element={<AdminCreate />} />
+            <Route path="/approval" element={<AdminApproval />} />
+            <Route path="/profile-settings" element={<AdminProfileSettings />} />
+          </Route>
+          <Route path="*" element={<Login />} />
         </Routes>
       </Router>
-
-      
     </div>
-  )
-}
+  );
+};
 
-export default App
-
+export default App;

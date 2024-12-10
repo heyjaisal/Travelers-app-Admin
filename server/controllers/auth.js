@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Admin = require('../models/adminModel');
 require("dotenv").config();
+const nodemailer = require('nodemailer');
 
 const createSuperAdmin = async (req, res) => {
   const { name, email, password, role, position } = req.body;
@@ -9,7 +10,7 @@ const createSuperAdmin = async (req, res) => {
   
 
   try {
-    // Check if a Super Admin already exists
+
     const existingSuperAdmin = await Admin.findOne({ role: 'superadmin' });
     if (existingSuperAdmin) {
       return res.status(403).send('A Super Admin already exists.');
@@ -35,51 +36,71 @@ const createSuperAdmin = async (req, res) => {
   }
 };
 
-
-// Create Admin
 const createAdmin = async (req, res) => {
-    const { name, email, mobile, password, role, position } = req.body;
-    const image = req.file;
-  
-    try {
-      
-      const existingUser = await Admin.findOne({ email });
-      if (existingUser) {
-        return res.status(400).send('Admin with this email already exists.');
-      }
-  
-      const existingMobile = await Admin.findOne({ mobile });
-      if (existingMobile) {
-        return res.status(400).send('Admin with this mobile number already exists.');
-      }
-  
-      
-      let cloudinaryResult = null;
-      if (image) {
-        cloudinaryResult = await cloudinary.uploader.upload(image.path, {
-          folder: 'admins',
-        });
-      }
-  
-      const newAdmin = new Admin({
-        name,
-        email,
-        mobile,
-        password,
-        role: role || 'admin',
-        position,
-        image: cloudinaryResult ? cloudinaryResult.secure_url : null,
-      });
-  
-      await newAdmin.save();
-      res.status(201).send('Admin created successfully.');
-    } catch (error) {
-      console.error('Error creating Admin:', error);
-      res.status(500).send('Internal server error.');
-    }
-  };
+  try {
+      const { name, email, personalEmail, mobile, password, position } = req.body;
 
-  const loginSuperAdmin = async (req, res) => {
+ 
+      const existingAdmin = await Admin.findOne({
+          where: {
+              $or: [
+                  { email }, 
+                  { mobile } 
+              ]
+          }
+      });
+
+      if (existingAdmin) {
+          if (existingAdmin.email === email) {
+              return res.status(400).json({ error: 'Email is already in use' });
+          }
+          if (existingAdmin.mobile === mobile) {
+              return res.status(400).json({ error: 'Mobile number is already in use' });
+          }
+      }
+
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+
+      const newAdmin = await Admin.create({
+          name,
+          email,
+          personalEmail,
+          mobile,
+          password: hashedPassword,
+          position,
+          image: req.file?.location,
+      });
+
+   
+      const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS,
+          },
+      });
+
+      const mailOptions = {
+          from: process.env.SMTP_USER,
+          to: personalEmail,
+          subject: 'Admin Account Created',
+          text: `Your admin account has been created.\n\nLogin Email: ${email}\nPassword: ${password}`,
+      };
+
+      await transporter.sendMail(mailOptions);
+
+      res.status(201).json({ message: 'Admin created successfully', admin: newAdmin });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+
+const loginSuperAdmin = async (req, res) => {
     const { email, password } = req.body;
   
     try {

@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 
 const AdminSchema = new mongoose.Schema({
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, enum: ['admin', 'superadmin'], default: 'admin' },
     name: { type: String, required: true },
-    position: { type: String, required: false }, // For admins only
+    email: { type: String, required: true, unique: true },
+    personalEmail: { type: String, required: true },
+    mobile: { type: String, required: true },
+    password: { type: String, required: true },
+    position: { type: String, required: true },
+    image: { type: String }, // URL of the uploaded image
 });
 
 const Admin = mongoose.model('Admin', AdminSchema);
