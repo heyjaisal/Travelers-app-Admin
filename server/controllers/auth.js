@@ -98,37 +98,40 @@ const createAdmin = async (req, res) => {
   }
 };
 
-
-
 const loginSuperAdmin = async (req, res) => {
-    const { email, password } = req.body;
-  
-    try {
+  const { email, password } = req.body;
 
-      const user = await Admin.findOne({ email, role: 'superadmin' });
-      if (!user) {
-        return res.status(404).send('Super Admin not found.');
-      }
-  
-
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        return res.status(401).send('Invalid credentials.');
-      }
-
-      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  
-     
-      res.status(200).send({
-        message: 'Super Admin logged in successfully.',
-        token,
-        dashboard: 'superadmin-dashboard', 
-      });
-    } catch (error) {
-      console.error('Error during Super Admin login:', error);
-      res.status(500).send('Internal server error.');
+  try {
+    // Check if the user exists and has the superadmin role
+    const user = await Admin.findOne({ email, role: 'superadmin' });
+    if (!user) {
+      return res.status(404).json({ error: 'Super Admin not found.' });
     }
-  };
+
+    // Validate the provided password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid credentials.' });
+    }
+
+    // Generate a JWT token with superadmin role
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    // Respond with the token and a success message
+    res.status(200).json({
+      message: 'Super Admin logged in successfully.',
+      token,
+      dashboard: 'home',
+    });
+  } catch (error) {
+    console.error('Error during Super Admin login:', error);
+    res.status(500).json({ error: 'Internal server error.' });
+  }
+};
 
 
 module.exports = { createAdmin, loginSuperAdmin, createSuperAdmin };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,13 +8,24 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (token) {
+      navigate('/home'); 
+      return;
+    }
+  }, [navigate, token]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
+
     if (!email || !password) {
       setError('Please fill in both email and password.');
       return;
     }
-    setError('');
+
+    setError(''); // Clear any previous error messages
 
     try {
       const response = await axios.post('http://localhost:5000/api/login', {
@@ -22,15 +33,15 @@ const Login = () => {
         password,
       });
 
-      const { token } = response.data;
+      const { token } = response.data; // Destructure the token from response
 
       if (token) {
         localStorage.setItem('token', token); // Store token securely
-        navigate('/home'); // Redirect to home page
+        navigate('/home'); // Redirect to the dashboard
       }
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Login failed. Please try again.');
-      console.error(err); // Log error for debugging
+      setError(err.response?.data?.error || 'Login failed. Please try again.'); // Show server error message
+      console.error('Login error:', err); // Log error for debugging
     }
   };
 

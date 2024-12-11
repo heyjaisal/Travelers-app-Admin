@@ -10,6 +10,15 @@ import {
 } from "react-icons/fa";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/'); 
+      return;
+    }
+  }, [navigate, token]);
 
   return (
     <div>
