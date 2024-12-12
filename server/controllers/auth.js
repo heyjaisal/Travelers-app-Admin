@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Admin = require('../models/adminModel');
 require("dotenv").config();
-const nodemailer = require('nodemailer');
 
 const createSuperAdmin = async (req, res) => {
   const { name, email, password, role, position } = req.body;
@@ -102,26 +101,25 @@ const loginSuperAdmin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if the user exists and has the superadmin role
+
     const user = await Admin.findOne({ email, role: 'superadmin' });
     if (!user) {
       return res.status(404).json({ error: 'Super Admin not found.' });
     }
 
-    // Validate the provided password
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ error: 'Invalid credentials.' });
     }
 
-    // Generate a JWT token with superadmin role
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
-    // Respond with the token and a success message
+  
     res.status(200).json({
       message: 'Super Admin logged in successfully.',
       token,
